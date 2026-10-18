@@ -1,8 +1,6 @@
 VENV := .venv
 PYTHON := $(VENV)/bin/python3
 PIP := $(VENV)/bin/pip
-# Carga .env (datos de remitente/contrato) si existe; ver .env.example
-LOAD_ENV := set -a; if [ -f .env ]; then . ./.env; fi; set +a;
 
 .PHONY: help install install-dev check-csv generar generar-por-pais test clean
 
@@ -33,10 +31,10 @@ check-csv:
 	@test -n "$(CSV)" || { echo "Error: indica el CSV de pedidos, p. ej. make $(MAKECMDGOALS) CSV=data/orders-square.csv"; exit 1; }
 
 generar: install check-csv
-	@$(LOAD_ENV) $(PYTHON) scripts/generar_formato_unico.py "$(CSV)"
+	$(PYTHON) scripts/generar_formato_unico.py "$(CSV)"
 
 generar-por-pais: install check-csv
-	@$(LOAD_ENV) $(PYTHON) scripts/generar_formato_unico.py "$(CSV)" --agrupar-por-pais
+	$(PYTHON) scripts/generar_formato_unico.py "$(CSV)" --agrupar-por-pais
 
 test: install-dev
 	$(PYTHON) -m pytest

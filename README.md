@@ -111,6 +111,10 @@ fichero.
 | `--tipo-envio` | `2` (Venta de Mercancías) | Tipo de envío (campo 111) |
 | `--instrucciones-no-entrega` | `D` (Devolver al remitente) | Instrucciones si no hay entrega: `D` Devolver al remitente / `A` Tratar como abandonado |
 
+Los valores por defecto de peso, medidas y códigos de Correos están en
+`scripts/constantes.py`: edítalos ahí si cambian para todos los envíos, o
+usa los flags para una ejecución concreta.
+
 Ejemplo cambiando el peso:
 
 ```bash
@@ -131,22 +135,8 @@ especificación (Correos los toma de tu cuenta si no se informan):
 - **Datos del remitente** (tu nombre, dirección, localidad, CP, provincia,
   país, teléfono, email) — se repetirían igual en todas las filas.
 
-Se configuran con variables de entorno (`CORREOS_REMITENTE_<CAMPO>` y
-`CORREOS_CONTRATO_<CAMPO>`), que lee `scripts/constantes_correos.py`, para
-no guardar datos personales en el repositorio:
-
-```bash
-cp .env.example .env    # y rellena los valores; .env está en .gitignore
-```
-
-`make generar` y `make generar-por-pais` cargan `.env` automáticamente. Si
-ejecutas el script a mano, cárgalo antes con `set -a; . ./.env; set +a`.
-
-**Pendiente:** a día de hoy `generar_formato_unico.py` todavía no lee
-`constantes_correos.py` — la integración quedó sin terminar. Como esos campos
-son opcionales, el fichero se puede subir sin ellos (Correos usará los datos
-de tu cuenta), pero si prefieres fijarlos en el fichero hay que rellenarlos a
-mano en Excel por ahora.
+El fichero se puede subir así: Correos usa los datos de remitente y de
+contrato de la cuenta con la que lo cargas.
 
 ## Tests
 
